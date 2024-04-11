@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing:border-box;
+        }
+
+        .box{
+            /* background-color: green; */
+            width: 100vh;
+            height: 100%;
+            position:relative;
+            top:100px;
+            left:35%;
+        }
+        
+        button {
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            background-size: cover;
+
+            &:hover {
+                background-color: skyblue;
+
+            }
+        }
+
+        button.scissor {
+            background-image: url(./img/CPU-1.png);
+        }
+
+        button.stone {
+            background-image: url(./img/CPU-2.png);
+        }
+
+        button.paper {
+            background-image: url(./img/CPU-3.png);
+        }
+
+        img{
+            width: 200px;
+            height: 200px;
+        }
+
+        .result{
+            color:red;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="box">
+        <h2>玩家的選擇:</h2>
+        <button class="scissor" value="0"></button>
+        <button class="stone" value="1"></button>
+        <button class="paper" value="2"></button>
+
+        <div>
+            <h2>CPU:</h2>
+            <img class="computer" src="./img/CPU-1.png" >
+        </div>
+        <div>
+            <h2>結果：</h2>
+            <h1 class="result"></h1>
+        </div>
+    </div>
+    
+
+    <script>
+        let scissorBtn = document.querySelector('.scissor');
+        let stoneBtn = document.querySelector('.stone');
+        let paperBtn = document.querySelector('.paper');
+        let result = document.querySelector('.result');
+        let computer = document.querySelector('.computer');
+
+        scissorBtn.addEventListener('click', function (){
+            let CPU = Math.floor(Math.random() * 3);
+            computer.innerHTML = CPU;
+
+            if (CPU === 0) {
+                computer.src = `./img/CPU-1.png`;
+                result.innerHTML = '平手!';
+            }
+            else if (CPU === 1) {
+                computer.src = `./img/CPU-2.png`;
+                result.innerHTML = '你這場輸了!';
+            }
+            else if (CPU === 2) {
+                computer.src = `./img/CPU-3.png`;
+                result.innerHTML = '你這場贏了!';
+            }
+        })
+
+        stoneBtn.addEventListener('click', function (){
+            
+            let CPU = Math.floor(Math.random() * 3);
+            computer.innerHTML = CPU;
+
+            if (CPU === 0) {
+                computer.src = `./img/CPU-1.png`;
+                result.innerHTML = '你這場贏了!';
+            }
+            else if (CPU === 1) {
+                computer.src = `./img/CPU-2.png`;
+                result.innerHTML = '平手!';
+            }
+            else if (CPU === 2) {
+                computer.src = `./img/CPU-3.png`;
+                result.innerHTML = '你這場輸了!';
+            }
+        })
+        paperBtn.addEventListener('click', function (){
+            
+            let CPU = Math.floor(Math.random() * 3);
+            computer.innerHTML = CPU;
+
+            if (CPU === 0) {
+                computer.src = `./img/CPU-1.png`;
+                result.innerHTML = '你這場輸了!';
+            }
+            else if (CPU === 1) {
+                computer.src = `./img/CPU-2.png`;
+                result.innerHTML = '你這場贏了!';
+            }
+            else if (CPU === 2) {
+                computer.src = `./img/CPU-3.png`;
+                result.innerHTML = '平手!';
+            }
+        })
+
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>完整bmi計算</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background-color:white;
+        font-family: "Segoe UI",SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-weight: 600;
+    }
+
+    .container {
+        width: 90%;
+        margin: auto;
+        padding: 30px 0;
+    }
+
+    .box {
+        width: 100%;
+        border: 1px dashed black;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px dashed black;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        margin: auto;
+        font-weight: 600;
+    }
+
+    p , h3 {
+        font-size: 24px;
+    }
+
+
+    button {
+        font-size: 24px;
+        font-weight: 600;
+        width: 130px;
+        margin: auto;
+        &:hover {
+            cursor: pointer;
+            background-color: skyblue;
+        }
+    }
+
+    .txt, .height, .weight{
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .result , .shape{
+        color:red;
+        font-size: 30px;
+        font-family: "Segoe UI",SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-weight: 600;
+    }
+
+    table {
+        font-size: 24px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h1 class="title">BMI計算機</h1>
+            <h2 class="rules">
+                <p><span>身體質量指數(Body Mass Index，簡稱BMI)是公認用來估計肥胖程度的方法</span></p>
+                <p><span>BMI=體重（公斤） / 身高的平方（公尺）</span></p>
+            </h2>
+
+            <p>
+                <span class="txt genderTxt">性別：</span>
+                <input id="male" type="radio" name="gender" value="男"> <label for="male"> <span>男性</span>
+                </label>
+                <input id="female" type="radio" name="gender" value="女"> <label for="female"><span>女性</span>
+                </label>
+            </p>
+
+            <p>
+                我的身高：<span class="txt heightTxt"></span>
+                <input class="height" type="number" min="0" step="0.1"><span> (公分)</span>
+            </p>
+            <p>
+                我的體重：<span class="txt weightTxt"></span>
+                <input class="weight" type="number" min="0" step="0.1"><span> (公斤)</span>
+            </p>
+
+            <button>
+                <span class="resultBtn">計算</span>
+            </button>
+            <button>
+                <span class="clearBtn">重新填寫</span>
+            </button>
+
+            <p>
+            <h3>
+            <div class="result-box"></div>
+            BMI值為:<span class="result"></span>
+            體態:<span class="shape"></span>
+            </h3>
+            </p>
+
+            <p></p>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3">BMI</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>男性</th>
+                            <th>女性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="td-1">體重過輕</td>
+                            <td class="td-2">&lt;20.0</td>
+                            <td class="td-3">&lt;19.0</td>
+                        </tr>
+                        <tr>
+                            <td class="td-1">正常範圍</td>
+                            <td class="td-2">20.0-25.9</td>
+                            <td class="td-3">19.0-25.9</td>
+                        </tr>
+                        <tr>
+                            <td class="td-1">體重過重</td>
+                            <td class="td-2">26.0-30.9</td>
+                            <td class="td-3">26.0-30.9</td>
+                        </tr>
+                        <tr>
+                            <td class="td-1">肥胖</td>
+                            <td class="td-2">31.0-40.9</td>
+                            <td class="td-3">31.0-40.9</td>
+                        </tr>
+                        <tr>
+                            <td class="td-1">病態肥胖</td>
+                            <td class="td-2">&gt;40.0</td>
+                            <td class="td-3">&gt;40.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        let height = document.querySelector('.height');
+        let weight = document.querySelector('.weight');
+        let resultBtn = document.querySelector('.resultBtn');
+        let clearBtn = document.querySelector('.clearBtn');
+        let result = document.querySelector('.result');
+        let shape = document.querySelector('.shape');
+
+        let tBody = document.querySelectorAll('tbody'); 
+        let tdAll_1 = document.querySelectorAll('.td-1'); 
+        let tdAll_2 = document.querySelectorAll('.td-2'); 
+        let tdAll_3 = document.querySelectorAll('.td-3');
+
+        let doRowNew= 0 ;
+        let doRowOld = 0;
+        tdAll_1[0].style.backgroundColor = 'white';
+        tdAll_2[0].style.backgroundColor = 'white';
+        tdAll_3[0].style.backgroundColor = 'white';
+        doRowOld = doRowNew;
+
+        function tdWhite(){
+            tdAll_1[doRowNew].style.backgroundColor = 'white';
+            tdAll_2[doRowNew].style.backgroundColor = 'white';
+            tdAll_3[doRowNew].style.backgroundColor = 'white';
+        }
+
+        function tdAllMen(){
+            console.log('我在處理男性');
+            tdAll_1[doRowNew].style.backgroundColor = 'skyblue';
+            tdAll_2[doRowNew].style.backgroundColor = 'skyblue';
+        }
+
+        function tdAllWomen(){
+            console.log('我在處理女性');
+            tdAll_1[doRowNew].style.backgroundColor = 'pink';
+            tdAll_3[doRowNew].style.backgroundColor = 'pink';
+        }
+
+
+
+        clearBtn.addEventListener('click', function () {
+            male.checked = false;
+            female.checked = false;
+            height.value = '';
+            weight.value = '';
+            result.innerHTML = '';
+            shape.innerHTML = '';
+            tdWhite();
+        });
+
+        resultBtn.addEventListener('click', function () {
+            tdWhite();
+
+            let gender = document.querySelector('input[name = "gender"]:checked');
+            
+            if (!gender) {
+                alert('請選擇性別');
+                return;
+            }
+            if (height.value == '' || weight.value == '') {
+                alert('請輸入身高及體重');
+                return;
+            }
+
+            console.log(gender);
+            let BMI = (weight.value * 1 / (((height.value * 1) / 100) ** 2));
+            console.log(BMI);
+            result.innerHTML = BMI.toFixed(1);
+
+            let genderValue = gender.value;
+
+            let bodyShape = '';
+            if (BMI <=20 && genderValue ==='男'){
+                bodyShape ='體重過輕'
+                doRowNew = 0;
+                tdAllMen()
+            }else if(BMI >=20 && BMI <=25 && genderValue ==='男'){
+                bodyShape ='正常範圍'
+                doRowNew = 1;
+                tdAllMen()
+            }else if(BMI >=25 && BMI <=30 && genderValue ==='男'){
+                bodyShape ='體重過重'
+                doRowNew = 2;
+                tdAllMen()
+            }else if(BMI >=30 && BMI <=40 && genderValue ==='男'){
+                bodyShape ='肥胖'
+                doRowNew = 3;
+                tdAllMen()
+            }else if(BMI >=40 && genderValue ==='男'){
+                bodyShape ='病態肥胖'
+                doRowNew = 4;
+                tdAllMen()
+            }else if(BMI <=19 && genderValue ==='女'){
+                bodyShape ='體重過輕';
+                doRowNew = 0;
+                tdAllWomen()
+            }else if(BMI >=19 && BMI <=25 && genderValue ==='女'){
+                bodyShape ='正常範圍';
+                doRowNew = 1;
+                tdAllWomen()
+            }else if(BMI >=25 && BMI <=30 && genderValue ==='女'){
+                bodyShape ='體重過重';
+                doRowNew = 2;
+                tdAllWomen()
+            }else if(BMI >=30 && BMI <=40 && genderValue ==='女'){
+                bodyShape ='肥胖';
+                doRowNew = 3;
+                tdAllWomen()
+            }else if(BMI >=40 && genderValue ==='女'){
+                bodyShape ='病態肥胖';
+                doRowNew = 4;
+                tdAllWomen()
+            }
+
+            shape.innerHTML = bodyShape;
+            
+        });
+
+            
+            
+
+
+    </script>
+</body>
+</html>

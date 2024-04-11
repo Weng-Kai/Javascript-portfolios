@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>簡易bmi計算</title>
+    <style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background-color:whitesmoke;
+        font-family: "Segoe UI",SegoeUI,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    }
+
+    .container {
+        width: 90%;
+        margin: auto;
+        padding: 30px 0;
+    }
+
+    .box {
+        width: 100%;
+        border: 1px dashed black;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px dashed black;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        margin: auto;
+        font-weight: 600;
+    }
+
+    button,
+    input,
+    .txt {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    button {
+        width: 130px;
+        margin: auto;
+        &:hover {
+            cursor: pointer;
+            background-color: skyblue;
+        }
+    }
+
+    .resultTxt {
+        color: red;
+        font-weight: 600;
+        font-size: 30px;
+    }
+
+    table {
+        font-size: 24px;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <h1 class="title">BMI計算機</h1>
+            <h2 class="rules">
+                <p><span>身體質量指數(Body Mass Index，簡稱BMI)是公認用來估計肥胖程度的方法</span></p>
+                <p><span>BMI=體重（公斤） / 身高的平方（公尺）</span></p>
+            </h2>
+
+            <p>
+                <span class="txt genderTxt">生理性別：</span>
+                <input id="male" type="radio" name="gender" value="男"> <label for="male"> <span class="txt">男</span>
+                </label>
+                <input id="female" type="radio" name="gender" value="女"> <label for="female"><span class="txt">女</span>
+                </label>
+            </p>
+
+            <p>
+                <span class="txt heightTxt">我的身高：</span>
+                <input class="height" type="number" min="0" step="0.1"><span class="txt"> (公分)</span>
+            </p>
+            <p>
+                <span class="txt weightTxt">我的體重：</span>
+                <input class="weight" type="number" min="0" step="0.1"><span class="txt"> (公斤)</span>
+            </p>
+
+            <button>
+                <span class="resultBtn">計算</span>
+            </button>
+            <button>
+                <span class="clearBtn">重新填寫</span>
+            </button>
+
+            <p>
+            <div class="txt resultTxt">BMI值為<span class="result"></span></div>
+            </p>
+
+            <p></p>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="3">BMI</th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th>男性</th>
+                            <th>女性</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>體重過輕</td>
+                            <td>&lt;20.0</td>
+                            <td>&lt;19.0</td>
+                        </tr>
+                        <tr>
+                            <td>正常範圍</td>
+                            <td>20.0-25.9</td>
+                            <td>19.0-25.9</td>
+                        </tr>
+                        <tr>
+                            <td>體重過重</td>
+                            <td>26.0-30.9</td>
+                            <td>26.0-30.9</td>
+                        </tr>
+                        <tr>
+                            <td>肥胖</td>
+                            <td>31.0-40.9</td>
+                            <td>31.0-40.9</td>
+                        </tr>
+                        <tr>
+                            <td>病態肥胖</td>
+                            <td>&gt;40.0</td>
+                            <td>&gt;40.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        let gender = document.querySelector('.gender');
+        let height = document.querySelector('.height');
+        let weight = document.querySelector('.weight');
+        let resultBtn = document.querySelector('.resultBtn');
+        let clearBtn = document.querySelector('.clearBtn');
+        let result = document.querySelector('.result');
+
+        clearBtn.addEventListener('click', function () {
+            console.log(height.value);
+            console.log(weight.value);
+            male.checked = false;
+            female.checked = false;
+            height.value = '';
+            weight.value = '';
+            result.innerHTML = '';
+        });
+
+        resultBtn.addEventListener('click', function () {
+            let gender = document.querySelector('input[name = "gender"]:checked');
+
+            if (!gender) {
+                alert('請選擇生理性別');
+                return;
+            }
+            if (height.value == '' || weight.value == '') {
+                alert('請輸入身高及體重');
+                return;
+            }
+
+            let resultScore = (weight.value * 1 / (((height.value * 1) / 100) * ((height.value * 1) / 100)))
+            console.log(resultScore);
+            result.innerHTML = resultScore.toFixed(1);
+        })
+    </script>
+</body>
+</html>
