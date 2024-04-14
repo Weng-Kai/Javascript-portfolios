@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f06060;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+
+        }
+
+        .box-big {
+            width: 520px;
+            height: 520px;
+            background-color: #d3d3d3;
+            margin: auto;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            border-radius: 10px;
+        }
+
+        .box {
+            width: 50%;
+            height: 50%;
+            background-color: aqua;
+            border: 5px solid #d3d3d3;
+            border-radius: 10px;
+        }
+
+        .answer {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="box-big"></div>
+
+    <script>
+        let level = 2;
+        let size = 100 / level;
+        let boxBig = document.querySelector('.box-big');
+        let count = 0;
+        game();
+
+        function game(){
+            // 1.清空
+        boxBig.innerHTML = '';
+
+    // 2.產生小box還有顏色
+    // ‵‵ =>樣板符號 => 樣板語言
+    let color =
+        `rgb(${Math.floor(Math.random() * 255) + 1}, ${Math.floor(Math.random() * 255) + 1} ,${Math.floor(Math.random() * 255) + 1})`;
+    //                      二次方
+    // i ++ => i = i + 1
+
+    for (let i = 0; i < level ** 2; i++) {
+    // boxBig.innerHTML = boxBig.innerHTML + 'A';
+    // boxBig.innerHTML += 'A';
+    boxBig.innerHTML +=
+     `<div class="box" style="width:${size}%; height:${size}%; background-color:${color};">`;   
+    }
+    //3.產生解答方塊
+    let randomAnswer = Math.floor(Math.random() * level ** 2) + 1; //為了配合 css 使用 nth-of-type()
+    let answerBox = document.querySelector(`.box-big .box:nth-of-type(${randomAnswer})`);
+    answerBox.classList.add("answer");
+
+    // 4.為遊戲增加難度 => opacity 是變動的
+    answerBox.style.opacity = `${0.5 + level*0.005}`;
+    // 5. 互動 => 綁監聽事件
+    let answerBtn = document.querySelector('.answer');
+    answerBtn.addEventListener('click', function () {
+        count++;
+        if(count === level){
+        level++;
+        size = 100 / level;
+        count = 0;
+    }
+    game();
+});
+}
+    </script>
+</body>
+
+</html>
